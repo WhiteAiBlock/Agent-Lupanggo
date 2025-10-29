@@ -265,6 +265,16 @@ class OneirobotViewer {
         return traitsDiv;
     }
 
+    // Escape HTML special characters to prevent XSS
+    escapeHTML(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     showDetailedModal(tokenInfo, traits) {
         // Remove existing modal
         const existingModal = document.querySelector('.oneirobot-modal');
@@ -281,7 +291,7 @@ class OneirobotViewer {
         modal.className = 'oneirobot-modal';
         modal.innerHTML = `
             <h2 style="color: #00ffff; margin-bottom: 16px; text-align: center;">
-                🤖 Oneirobot #${tokenInfo.tokenId}
+                🤖 Oneirobot #${this.escapeHTML(tokenInfo.tokenId)}
             </h2>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div>
