@@ -8,7 +8,8 @@
 const { createClient } = require('@supabase/supabase-js');
 const { Connection, PublicKey, Keypair } = require('@solana/web3.js');
 const bs58 = require('bs58');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../../.env.local') });
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -16,7 +17,7 @@ const supabase = createClient(
 );
 
 const connection = new Connection(process.env.RPC_URL || 'https://api.mainnet-beta.solana.com');
-const wallet = Keypair.fromSecretKey(bs58.decode(process.env.RALPH_PRIVATE_KEY));
+const wallet = Keypair.fromSecretKey(bs58.default.decode(process.env.RALPH_PRIVATE_KEY || process.env.DEPLOYER_PRIVATE_KEY));
 
 class RalphLoop {
   constructor() {
