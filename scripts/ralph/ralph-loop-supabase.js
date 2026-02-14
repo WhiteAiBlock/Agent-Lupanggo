@@ -17,7 +17,11 @@ const supabase = createClient(
 );
 
 const connection = new Connection(process.env.RPC_URL || 'https://api.mainnet-beta.solana.com');
-const wallet = Keypair.fromSecretKey(bs58.default.decode(process.env.RALPH_PRIVATE_KEY || process.env.DEPLOYER_PRIVATE_KEY));
+
+// Generate ephemeral wallet for demo (replace with real key in production)
+const wallet = process.env.RALPH_PRIVATE_KEY && process.env.RALPH_PRIVATE_KEY !== 'DO_NOT_USE_REAL_KEY_LOCALLY'
+  ? Keypair.fromSecretKey(bs58.default.decode(process.env.RALPH_PRIVATE_KEY))
+  : Keypair.generate();
 
 class RalphLoop {
   constructor() {
@@ -28,6 +32,8 @@ class RalphLoop {
   }
 
   async init() {
+    console.log(`🔑 Wallet: ${wallet.publicKey.toString()}`);
+    
     // Create or get user
     const { data: user, error } = await supabase
       .from('users')
