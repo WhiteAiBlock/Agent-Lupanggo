@@ -21,6 +21,15 @@
 			},
 			"gallery": "https://api.mcp.github.com",
 			"version": "0.6.3"
+		},
+		"microsoft/markitdown": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": [
+				"markitdown-mcp@0.0.1a4"
+			],
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.0.0"
 		}
 	},
 	"inputs": [
